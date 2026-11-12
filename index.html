@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Кофейный котик — уютная кофейня</title>
+    <!-- Google Fonts для современной типографики -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    <!-- Font Awesome для иконок (необязательно, но улучшает контакты) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ---------- СБРОС И ГЛОБАЛЬНЫЕ СТИЛИ ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; /* плавная прокрутка */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf5ef; /* тёплый бежевый фон */
+            color: #3e2e21; /* тёмно-коричневый текст */
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ---------- ЦВЕТОВАЯ ПАЛИТРА (тёплые бежево-коричневые оттенки) ---------- */
+        :root {
+            --beige-light: #f7efe7;
+            --beige: #ede3d8;
+            --beige-dark: #d9c7b0;
+            --brown-light: #b48b6a;
+            --brown: #8b5e3c;
+            --brown-dark: #5e3e28;
+            --brown-deep: #3e2e21;
+            --accent: #c17b4b; /* тёплый акцент */
+            --white: #fffaf5;
+        }
+
+        /* ---------- НАВИГАЦИЯ (фиксированная шапка) ---------- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(247, 239, 231, 0.92); /* полупрозрачный бежевый */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 6px 20px rgba(62, 46, 33, 0.05);
+            padding: 12px 0;
+            transition: box-shadow 0.3s, background 0.3s;
+            border-bottom: 1px solid rgba(180, 139, 106, 0.15);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--brown-dark);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            font-size: 1.9rem;
+            line-height: 1;
+            transform: translateY(-2px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            color: var(--brown-deep);
+            font-size: 1rem;
+            padding: 6px 0;
+            position: relative;
+            transition: color 0.25s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover {
+            color: var(--brown);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* мобильное меню — просто скрываем часть ссылок, но оставляем главные */
+        @media (max-width: 700px) {
+            .nav-links {
+                gap: 16px;
+                font-size: 0.9rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .logo {
+                font-size: 1.3rem;
+            }
+            .logo span {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .nav-links {
+                gap: 12px 18px;
+            }
+        }
+
+        /* ---------- ГЛАВНЫЙ РАЗДЕЛ (HERO) ---------- */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #ede3d8 0%, #f7efe7 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 60px 0;
+        }
+
+        .hero::before {
+            content: '🐾';
+            font-size: 22rem;
+            position: absolute;
+            right: -40px;
+            bottom: -80px;
+            opacity: 0.06;
+            transform: rotate(15deg);
+            pointer-events: none;
+            color: var(--brown-dark);
+            z-index: 0;
+        }
+
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-content .badge {
+            display: inline-block;
+            background: var(--brown-light);
+            color: var(--white);
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(139, 94, 60, 0.2);
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.8rem, 8vw, 4.6rem);
+            line-height: 1.1;
+            color: var(--brown-deep);
+            margin-bottom: 24px;
+        }
+
+        .hero-content h1 span {
+            color: var(--brown);
+            font-style: italic;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #5e4d3c;
+            margin-bottom: 32px;
+            max-width: 480px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--brown);
+            color: var(--white);
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.3px;
+            box-shadow: 0 10px 20px -8px rgba(94, 62, 40, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid transparent;
+        }
+
+        .btn:hover {
+            background: var(--brown-dark);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 18px 28px -8px rgba(94, 62, 40, 0.5);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image .coffee-illustration {
+            background: radial-gradient(circle at 30% 30%, #d9c7b0, #b48b6a);
+            width: 340px;
+            height: 340px;
+            border-radius: 50% 50% 30% 70% / 60% 50% 50% 40%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 30px 40px -20px rgba(62, 46, 33, 0.5);
+            transform: rotate(5deg);
+            transition: transform 0.5s ease;
+            font-size: 8rem;
+            color: #3e2e21;
+            text-shadow: 4px 4px 0 rgba(247, 239, 231, 0.4);
+            animation: float 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: rotate(5deg) translateY(0); }
+            100% { transform: rotate(8deg) translateY(-15px); }
+        }
+
+        .hero-image .coffee-illustration:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        @media (max-width: 900px) {
+            .hero .container {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-image .coffee-illustration {
+                width: 260px;
+                height: 260px;
+                font-size: 6rem;
+            }
+            .hero {
+                min-height: auto;
+                padding: 50px 0 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-image .coffee-illustration {
+                width: 200px;
+                height: 200px;
+                font-size: 4.5rem;
+            }
+            .btn {
+                padding: 14px 28px;
+                font-size: 1rem;
+            }
+        }
+
+        /* ---------- ОБЩИЕ СТИЛИ ДЛЯ СЕКЦИЙ ---------- */
+        section {
+            padding: 80px 0;
+            scroll-margin-top: 80px; /* чтобы фиксированное меню не перекрывало заголовки */
+        }
+
+        .section-title {
+            font-size: 2.6rem;
+            text-align: center;
+            margin-bottom: 16px;
+            color: var(--brown-deep);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 4px;
+            background: var(--brown-light);
+            border-radius: 4px;
+            margin: 18px auto 0;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.15rem;
+            color: #6b5a4a;
+            max-width: 600px;
+            margin: 0 auto 50px;
+        }
+
+        /* ---------- О КОМПАНИИ ---------- */
+        .about {
+            background: var(--white);
+        }
+
+        .about-grid {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1.2;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: #4d3e31;
+            margin-bottom: 20px;
+        }
+
+        .about-text .highlight {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: var(--brown);
+            border-left: 4px solid var(--brown-light);
+            padding-left: 20px;
+            margin: 30px 0;
+            font-style: italic;
+        }
+
+        .about-stats {
+            flex: 0.8;
+            background: var(--beige-light);
+            border-radius: 40px 20px 40px 20px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            box-shadow: 0 20px 30px -15px rgba(62, 46, 33, 0.15);
+            border: 1px solid rgba(180, 139, 106, 0.2);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: var(--brown);
+            line-height: 1;
+            min-width: 80px;
+        }
+
+        .stat-desc {
+            font-size: 1rem;
+            color: #3e2e21;
+            font-weight: 500;
+        }
+
+        @media (max-width: 800px) {
+            .about-grid {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .about-stats {
+                width: 100%;
+            }
+            .stat-number {
+                font-size: 2.4rem;
+                min-width: 70px;
+            }
+        }
+
+        /* ---------- МЕНЮ (6 фирменных напитков) ---------- */
+        .menu {
+            background: var(--beige-light);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: var(--white);
+            border-radius: 30px 12px 30px 12px;
+            padding: 32px 24px 28px;
+            text-align: center;
+            box-shadow: 0 10px 25px -8px rgba(94, 62, 40, 0.1);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
+            border: 1px solid rgba(180, 139, 106, 0.15);
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 35px -12px rgba(94, 62, 40, 0.25);
+            background: #fffaf5;
+            border-color: var(--brown-light);
+        }
+
+        .menu-icon {
+            font-size: 3.2rem;
+            margin-bottom: 16px;
+            filter: drop-shadow(2px 4px 6px rgba(139, 94, 60, 0.2));
+            transition: transform 0.3s;
+        }
+
+        .menu-card:hover .menu-icon {
+            transform: scale(1.15) rotate(3deg);
+        }
+
+        .menu-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--brown-deep);
+        }
+
+        .menu-card p {
+            font-size: 0.95rem;
+            color: #6b5a4a;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .menu-price {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--brown);
+            background: var(--beige);
+            display: inline-block;
+            padding: 6px 22px;
+            border-radius: 30px;
+            margin-top: auto;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .menu-card:hover .menu-price {
+            background: var(--brown-light);
+            color: white;
+        }
+
+        @media (max-width: 900px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* ---------- АКЦИИ ---------- */
+        .promotions {
+            background: var(--white);
+        }
+
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .promo-card {
+            background: linear-gradient(145deg, #f7efe7, #ede3d8);
+            border-radius: 20px;
+            padding: 40px 24px 32px;
+            text-align: center;
+            box-shadow: 0 12px 22px -12px rgba(62, 46, 33, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(180, 139, 106, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-card::before {
+            content: '🎁';
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 5rem;
+            opacity: 0.15;
+            transform: rotate(15deg);
+            pointer-events: none;
+        }
+
+        .promo-card:hover {
+            transform: scale(1.02) translateY(-6px);
+            box-shadow: 0 28px 32px -14px rgba(94, 62, 40, 0.35);
+            background: linear-gradient(145deg, #fff3e8, #f3e6d8);
+        }
+
+        .promo-card h3 {
+            font-size: 1.9rem;
+            color: var(--brown);
+            margin-bottom: 12px;
+        }
+
+        .promo-card p {
+            color: #4d3e31;
+            font-size: 1rem;
+            margin-bottom: 18px;
+        }
+
+        .promo-badge {
+            display: inline-block;
+            background: var(--brown-dark);
+            color: var(--white);
+            padding: 6px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: background 0.3s;
+        }
+
+        .promo-card:hover .promo-badge {
+            background: var(--brown);
+        }
+
+        @media (max-width: 850px) {
+            .promo-grid {
+                grid-template-columns: 1fr;
+                max-width: 420px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* ---------- БОНУСНАЯ ПРОГРАММА ---------- */
+        .loyalty {
+            background: var(--beige-light);
+        }
+
+        .loyalty-wrapper {
+            background: var(--white);
+            border-radius: 50px 20px 50px 20px;
+            padding: 60px 50px;
+            box-shadow: 0 25px 35px -18px rgba(94, 62, 40, 0.25);
+            border: 1px solid rgba(180, 139, 106, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .loyalty-content {
+            flex: 1.5;
+        }
+
+        .loyalty-content h3 {
+            font-size: 2.2rem;
+            color: var(--brown-deep);
+            margin-bottom: 24px;
+        }
+
+        .loyalty-steps {
+            list-style: none;
+        }
+
+        .loyalty-steps li {
+            font-size: 1.1rem;
+            padding: 14px 0 14px 44px;
+            position: relative;
+            border-bottom: 1px dashed rgba(139, 94, 60, 0.2);
+            color: #3e2e21;
+        }
+
+        .loyalty-steps li:last-child {
+            border-bottom: none;
+        }
+
+        .loyalty-steps li::before {
+            content: '🐱';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            font-size: 1.6rem;
+            line-height: 1;
+            transition: transform 0.2s;
+        }
+
+        .loyalty-steps li:hover::before {
+            transform: scale(1.2) rotate(-5deg);
+        }
+
+        .loyalty-card-visual {
+            flex: 1;
+            background: radial-gradient(circle at 70% 30%, #d9c7b0, #b48b6a);
+            border-radius: 40px 12px 40px 12px;
+            padding: 40px 30px;
+            text-align: center;
+            color: var(--white);
+            box-shadow: 0 30px 25px -15px rgba(62, 46, 33, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .loyalty-card-visual:hover {
+            transform: rotate(1deg) scale(1.02);
+        }
+
+        .loyalty-card-visual .big-emoji {
+            font-size: 5rem;
+            margin-bottom: 10px;
+            display: block;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+        }
+
+        .loyalty-card-visual p {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .loyalty-card-visual small {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            display: block;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 800px) {
+            .loyalty-wrapper {
+                flex-direction: column;
+                padding: 40px 28px;
+                gap: 30px;
+            }
+            .loyalty-content h3 {
+                font-size: 1.8rem;
+            }
+            .loyalty-steps li {
+                font-size: 1rem;
+            }
+        }
+
+        /* ---------- КОНТАКТЫ ---------- */
+        .contacts {
+            background: var(--white);
+            padding-bottom: 70px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: var(--beige-light);
+            border-radius: 40px 20px 40px 20px;
+            padding: 50px 40px;
+            border: 1px solid rgba(180, 139, 106, 0.2);
+            box-shadow: 0 18px 30px -12px rgba(62, 46, 33, 0.15);
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            color: var(--brown-deep);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 28px;
+            transition: transform 0.2s;
+        }
+
+        .contact-item:hover {
+            transform: translateX(6px);
+        }
+
+        .contact-item i {
+            font-size: 1.8rem;
+            color: var(--brown);
+            width: 36px;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .contact-item p {
+            font-size: 1.1rem;
+            color: #3e2e21;
+            line-height: 1.5;
+        }
+
+        .contact-item .label {
+            font-weight: 600;
+            color: var(--brown-dark);
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .map-placeholder {
+            background: #d9c7b0;
+            border-radius: 30px 12px 30px 12px;
+            height: 100%;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--brown-deep);
+            font-weight: 500;
+            padding: 30px;
+            text-align: center;
+            background-image: radial-gradient(circle at 20% 30%, #e6d5c0 2px, transparent 2px), 
+                              radial-gradient(circle at 80% 70%, #e6d5c0 2px, transparent 2px);
+            background-size: 40px 40px, 60px 60px;
+            box-shadow: inset 0 0 0 2px rgba(255, 250, 245, 0.4);
+            transition: all 0.3s;
+            border: 2px dashed rgba(139, 94, 60, 0.3);
+        }
+
+        .map-placeholder:hover {
+            background-color: #cfb99f;
+            color: #2c1f16;
+        }
+
+        .map-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--brown);
+        }
+
+        .map-placeholder span {
+            font-size: 1rem;
+            max-width: 220px;
+        }
+
+        @media (max-width: 700px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                padding: 30px 24px;
+                gap: 20px;
+            }
+            .map-placeholder {
+                min-height: 200px;
+            }
+        }
+
+        /* ---------- ФУТЕР (просто для завершённости) ---------- */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            background: #3e2e21;
+            color: #d9c7b0;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+
+        .footer span {
+            color: #f7efe7;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- НАВИГАЦИЯ (остаётся сверху при прокрутке) -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span>🐈</span> Кофейный котик
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#menu">Меню</a></li>
+                <li><a href="#promotions">Акции</a></li>
+                <li><a href="#loyalty">Бонусы</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- ГЛАВНЫЙ РАЗДЕЛ (HERO) -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">☕ Уют как дома</div>
+                <h1>Согревающий кофе<br>и <span>мурчащий</span> уют</h1>
+                <p>В «Кофейном котике» каждый глоток — как объятия. Заходите за порцией тепла и любимым напитком.</p>
+                <a href="#menu" class="btn">Попробовать меню →</a>
+            </div>
+            <div class="hero-image">
+                <div class="coffee-illustration">☕🐱</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- О КОМПАНИИ -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">Наша история</h2>
+            <p class="section-subtitle">Маленькая кофейня, в которой живёт большая любовь</p>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>«Кофейный котик» открылся в 2018 году как место, где можно спрятаться от городской суеты, погладить кота и выпить идеальный капучино. Мы начинали с небольшой витрины и трёх столиков, а сегодня стали вторым домом для сотен гостей.</p>
+                    <p>Наши обжарщики сами выбирают зёрна, а бариста вкладывают в каждую чашку частичку души. И да, у нас живут два настоящих кота — Бублик и Мокка, которые всегда рады новым знакомствам.</p>
+                    <div class="highlight">«Мы верим, что кофе — это не просто напиток, а ритуал тепла и заботы».</div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">7</div>
+                        <div class="stat-desc">лет уюта<br>и аромата</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">28</div>
+                        <div class="stat-desc">авторских<br>напитков</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2</div>
+                        <div class="stat-desc">пушистых<br>сотрудника</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- МЕНЮ (6 фирменных напитков) -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <h2 class="section-title">Фирменные напитки</h2>
+            <p class="section-subtitle">Шесть причин заглянуть к нам прямо сейчас</p>
+            <div class="menu-grid">
+                <!-- 1 -->
+                <div class="menu-card">
+                    <div class="menu-icon">🐱☕</div>
+                    <h3>Мурчащий латте</h3>
+                    <p>Нежный латте с нотками ванили и корицы, украшенный пенкой в виде кошачьей мордочки.</p>
+                    <div class="menu-price">320 ₽</div>
+                </div>
+                <!-- 2 -->
+                <div class="menu-card">
+                    <div class="menu-icon">🍫☕</div>
+                    <h3>Шоколадный кот</h3>
+                    <p>Горячий шоколад на молоке с добавлением эспрессо и взбитых сливок.</p>
+                    <div class="menu-price">350 ₽</div>
+                </div>
+                <!-- 3 -->
+                <div class="menu-card">
+                    <div class="menu-icon">🧊🥛</div>
+                    <h3>Айс-мяу-капучино</h3>
+                    <p>Холодный капучино со льдом и карамельным сиропом. Освежает в жаркий день.</p>
+                    <div class="menu-price">340 ₽</div>
+                </div>
+                <!-- 4 -->
+                <div class="menu-card">
+                    <div class="menu-icon">🍯☕</div>
+                    <h3>Медовый раф</h3>
+                    <p>Раф на сливках с натуральным мёдом и щепоткой морской соли. Бархатистый и тёплый.</p>
+                    <div class="menu-price">370 ₽</div>
+                </div>
+                <!-- 5 -->
+                <div class="menu-card">
+                    <div class="menu-icon">🍓☕</div>
+                    <h3>Земляничный флэт</h3>
+                    <p>Флэт уайт с добавлением земляничного пюре и миндального молока. Яркий и бодрящий.</p>
+                    <div class="menu-price">390 ₽</div>
+                </div>
+                <!-- 6 -->
+                <div class="menu-card">
+                    <div class="menu-icon">🌿☕</div>
+                    <h3>Лавандовый котик</h3>
+                    <p>Авторский латте с сиропом лаванды и белым шоколадом. Нежный, как прикосновение лапки.</p>
+                    <div class="menu-price">410 ₽</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- АКЦИИ (3 актуальные) -->
+    <section class="promotions" id="promotions">
+        <div class="container">
+            <h2 class="section-title">Акции и спецпредложения</h2>
+            <p class="section-subtitle">Приятные бонусы для наших гостей</p>
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <h3>Счастливые часы</h3>
+                    <p>Каждый будний день с 15:00 до 17:00 — второй напиток в подарок при покупке первого.</p>
+                    <span class="promo-badge">-50% на второй</span>
+                </div>
+                <div class="promo-card">
+                    <h3>Кофе с котом</h3>
+                    <p>При заказе любого десерта — бесплатное фото с нашим котом Бубликом и угощение для него.</p>
+                    <span class="promo-badge">бесплатный фотосет</span>
+                </div>
+                <div class="promo-card">
+                    <h3>Утренний комбо</h3>
+                    <p>С 8:00 до 11:00 — круассан + капучино всего за 299 ₽. Начни день вкусно!</p>
+                    <span class="promo-badge">выгодно</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- БОНУСНАЯ ПРОГРАММА -->
+    <section class="loyalty" id="loyalty">
+        <div class="container">
+            <h2 class="section-title">Бонусная
